@@ -59,7 +59,14 @@ def gcd(x, y):
         return gcd(y, x % y)
 
 def pi(n):
-    return 42
+    count = 0
+    if n == 0 or n == 1: return count
+    for num in range(2, n + 1):
+        for i in range(2, num + 1):
+            if (num % i) == 0:
+                count += 1
+    return count
+
 
 def h(n):
     return 42
