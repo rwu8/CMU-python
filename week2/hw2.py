@@ -1,3 +1,4 @@
+
 #################################################
 # Hw2
 #################################################
@@ -37,7 +38,7 @@ def isHappyNumber(x):
 
 def nthHappyPrime(n):
     return 42
-    
+
 def patternedMessage(msg, pattern):
     return 42
 
@@ -99,7 +100,7 @@ def testNthHappyPrime():
     assert(nthHappyPrime(5) == 79)
     assert(nthHappyPrime(6) == 97)
     print('Passed!')
-    
+
 def testPatternedMessage():
     print("Testing patternedMessage()...", end="")
     pattern1 = """
@@ -112,7 +113,7 @@ GoPirates!!!GoP
 irates   !!!GoP
 irates!!!GoPira
 """
-    assert(patternedMessage("Go Pirates!!!", pattern1).strip("\n") == 
+    assert(patternedMessage("Go Pirates!!!", pattern1).strip("\n") ==
             result1.strip("\n"))
 
     pattern2 = """
@@ -129,7 +130,7 @@ irates!!!GoPira
    !Th   ree   Dia
     m     o     n
 """
-    assert(patternedMessage("Three Diamonds!",pattern2).strip("\n") == 
+    assert(patternedMessage("Three Diamonds!",pattern2).strip("\n") ==
             result2.strip("\n"))
 
     pattern3 = """
@@ -188,7 +189,7 @@ ers!GoSte     elers!GoSt      eelers!GoSt      eelers!GoSt    eelers!G
                                      s!GoSteeler
                                       s!GoS
 """
-    assert(patternedMessage("Go Steelers!",pattern3).strip("\n") == 
+    assert(patternedMessage("Go Steelers!",pattern3).strip("\n") ==
             result3.strip("\n"))
 
     pattern4 = """
@@ -199,9 +200,9 @@ ers!GoSte     elers!GoSt      eelers!GoSt      eelers!GoSt    eelers!G
 A-C D?A -CD
 ?A -C D? A-
 """
-    assert(patternedMessage("A-C D?", pattern4).strip("\n") == 
+    assert(patternedMessage("A-C D?", pattern4).strip("\n") ==
             result4.strip("\n"))
-    
+
     assert(patternedMessage("A", "x y z").strip("\n") == "A A A".strip("\n"))
     assert(patternedMessage("The pattern is empty!", "").strip("\n") == "")
     print("Passed!")

@@ -26,13 +26,37 @@ def roundHalfUp(d):
 #################################################
 
 def digitCount(n):
-    return 42
+    count = 0
+    num = [x for x in str(abs(n))]
+    for i in num:
+        count += 1
+    return count
 
 def hasConsecutiveDigits(n):
-    return 42
+    num = [x for x in str(abs(n))]
+    for i in range(len(num)):
+        if (i < len(num) - 1 and num[i] == num[i + 1]):
+            return True
+    return False
 
 def gcd(x, y):
-    return 42
+    # non recursive
+    # while (x != y):
+    #     if x == 0:
+    #         return y
+    #     if y == 0:
+    #         return x
+    #     if x > y:
+    #         x = x % y
+    #     else:
+    #         y = y % x
+    # return x
+
+    # recurive
+    if y == 0:
+        return x
+    else:
+        return gcd(y, x % y)
 
 def pi(n):
     return 42
@@ -263,8 +287,8 @@ def testNthPerfectNumber():
     print('Testing nthPerfectNumber()... ', end='')
     assert(nthPerfectNumber(0) == 6)
     assert(nthPerfectNumber(1) == 28)
-    assert(nthPerfectNumber(2) == 496)  
-    assert(nthPerfectNumber(3) == 8128) # this can be slow 
+    assert(nthPerfectNumber(2) == 496)
+    assert(nthPerfectNumber(3) == 8128) # this can be slow
     print('Passed.')
 
 def testLongestDigitRun():
@@ -403,7 +427,7 @@ def testFindZeroWithBisection():
     print('Testing findZeroWithBisection()... ', end='')
     def f1(x): return x*x - 2 # root at x=sqrt(2)
     x = findZeroWithBisection(f1, 0, 2, 0.000000001)
-    assert(almostEqual(x, 1.41421356192))   
+    assert(almostEqual(x, 1.41421356192))
     def f2(x): return x**2 - (x + 1)  # root at x=phi
     x = findZeroWithBisection(f2, 0, 2, 0.000000001)
     assert(almostEqual(x, 1.61803398887))
@@ -441,7 +465,7 @@ def testHasBalancedParentheses():
     assert(hasBalancedParentheses("()") == True)
     assert(hasBalancedParentheses("") == True)
     assert(hasBalancedParentheses("())") == False)
-    assert(hasBalancedParentheses("()(") == False) 
+    assert(hasBalancedParentheses("()(") == False)
     assert(hasBalancedParentheses(")(") == False)
     assert(hasBalancedParentheses("(()())") == True)
     assert(hasBalancedParentheses("((()())(()(()())))") == True)
@@ -611,14 +635,14 @@ def testDecrypt():
 
 def testAll():
     testDigitCount()
-    testHasConsecutiveDigits() 
+    testHasConsecutiveDigits()
     testGcd()
     testPi()
     testH()
     testEstimatedPi()
     testEstimatedPiError()
     testNthAdditivePrime()
-    testNthPerfectNumber() 
+    testNthPerfectNumber()
     testVowelCount()
     testInterleave()
     testHasBalancedParentheses()

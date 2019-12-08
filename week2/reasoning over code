@@ -1,0 +1,22 @@
+#RC1 of 2:
+
+def rc1(s):
+    if (not isinstance(s, str)): return  False # must be a string
+    if ('0' in  s): return  False #must not have number 0
+	# t will include middle of the string; cutting off first and last chars
+	# n will include first and last chars of string
+    t,n = s[1:-1], int(s[0]+s[-1])
+    return (t.isalpha() and (t == t[0]*(n//2)))
+rc1('1aaaaa1')
+
+#RC2 of 2:
+def rc2(s, t):
+	# arguments must not be empty, s must be substring of t but not equal to t
+    assert((s !=  "") and (t != "") and (s in t) and (s != t))
+    result =  ""
+    for i in range(len(s)):
+		# if i is even, add corresponding t[i] to result
+        if ((i % 2) == 0): result += t[i]
+        else: result += t[-1-i]
+    return (result == s)
+rc2('ti', 'tin')
