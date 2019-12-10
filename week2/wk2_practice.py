@@ -59,26 +59,44 @@ def gcd(x, y):
         return gcd(y, x % y)
 
 def pi(n):
+    #helper fn
+    def isPrime(num):
+        if num < 2: return False
+        if num % 2 == 0: return num == 2 #2 is only even prime
+        if num % 3 == 0: return num == 3 #3 is the only odd prime
+        sqroot = int(math.sqrt(num))
+
+        for i in range(2, sqroot + 1):
+            if num % i == 0: return False
+        return True
+
     count = 0
-    if n == 0 or n == 1: return count
-    for num in range(2, n + 1):
-        for i in range(2, num + 1):
-            if (num % i) == 0:
-                count += 1
+    for i in range(n + 1):
+        if(isPrime(i)):
+            count += 1
     return count
 
-
 def h(n):
-    return 42
+    harmonic = 1
+    if n <= 0: return 0
+    else:
+        for i in range(2, n + 1):
+            harmonic += 1/i
+        return harmonic
 
 def estimatedPi(n):
-    return 42
+    if n <= 2: return 0
+    else:
+        return int(roundHalfUp(n / (h(n) - 1.5)))
 
 def estimatedPiError(n):
-    return 42
+    if n <= 2:
+        return 0
+    else:
+        return abs(estimatedPi(n) - pi(n))
 
-def sumOfDigits(n):
-    return 42
+# def sumOfDigits(n):
+#     return 42
 
 def nthAdditivePrime(n):
     return 42
