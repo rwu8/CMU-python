@@ -1,6 +1,7 @@
 #################################################
 # Week2 Practice
 #################################################
+import string
 
 import cs112_s18_week2_linter
 import math
@@ -98,20 +99,106 @@ def estimatedPiError(n):
 # def sumOfDigits(n):
 #     return 42
 
+def isPrime(n):
+    if (n < 2):
+        return False
+    for factor in range(2,n):
+        if (n % factor == 0):
+            return False
+    return True
+
+def sumOfDigits(n):
+    n = abs(n)
+    total = 0
+
+    while (n > 0):
+        onesDigit = n % 10
+        n //= 10
+        total += onesDigit
+    return total
+
+def isAdditivePrime(n):
+    return (isPrime(n) and isPrime(sumOfDigits(n)))
+
 def nthAdditivePrime(n):
-    return 42
+    found = 0
+    guess = 0
+    while (found <= n):
+        guess += 1
+        if (isAdditivePrime(guess)):
+            found += 1
+    return guess
+
+# def isPerfectNumber(n): #slow
+#     n = abs(n)
+#     total = 0
+#
+#     for divisor in range(1, n):
+#         if n % divisor == 0:
+#             total += divisor
+#     return (total == n)
+
+def isPerfectNumber(n): #fast
+    if n <= 1: return False
+
+    n = abs(n)
+    total = 1
+    maxFactor = roundHalfUp(math.sqrt(n))
+    for divisor in range(2, maxFactor + 1):
+        if n % divisor == 0:
+            total += divisor
+            total += (n // divisor)
+    return (total == n)
 
 def nthPerfectNumber(n):
-    return 42
+    found = 0
+    guess = 0
+    while (found <= n):
+        guess += 1
+        if (isPerfectNumber(guess)):
+            found += 1
+    return guess
 
 def vowelCount(s):
-    return 42
+    s = s.lower()
+    total = 0
+    for c in s:
+        if c == 'a' or c == 'e' or c == 'i' or c == 'o' or c == 'u':
+            total += 1
+    return total
 
 def interleave(s1, s2):
-    return 42
+    s1Length = len(s1)
+    s2Length = len(s2)
+    newString = ""
+    counter = 0
+    if (s1Length > s2Length):
+        for c in range(s2Length):
+            newString += s1[c] + s2[c]
+            counter += 1
+        newString += s1[counter:-1] + s1[-1]
+    elif (s2Length > s1Length):
+        for c in range(s1Length):
+            newString += s1[c] + s2[c]
+            counter += 1
+        newString += s2[counter:-1] + s2[-1]
+    else:
+        for c in range(s1Length):
+            newString += s1[c] + s2[c]
+    return newString
 
 def hasBalancedParentheses(s):
-    return 42
+    left = 0
+
+    for c in range(len(s)):
+        if s[c] == '(':
+            left += 1
+        elif s[c] == ')':
+            if left == 0:
+                left -= 1
+                break
+            left -= 1
+    return left == 0
 
 #################################################
 # Wed Recitation
