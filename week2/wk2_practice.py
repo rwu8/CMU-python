@@ -203,9 +203,34 @@ def hasBalancedParentheses(s):
 #################################################
 # Wed Recitation
 #################################################
+def digitRunAtStart(n):
+    initial = n % 10
+    counter = 1
+    while (n > 0):
+        n = n // 10
+        curr = n % 10
+        if (curr == initial):
+            counter += 1
+        else:
+            break
+    return counter
 
 def longestDigitRun(n):
-    return 42
+    if (n == 0): return 0
+    n = abs(n)
+    currentLongestRun = 0
+    currentLongestDigit = -1
+
+    while (n> 0):
+        digit = n % 10
+        if (digitRunAtStart(n) > currentLongestRun):
+            currentLongestRun = digitRunAtStart(n)
+            currentLongestDigit = digit
+        elif (digitRunAtStart(n) == currentLongestRun
+              and digit < currentLongestDigit):
+            currentLongestDigit = digit
+        n = n // 10**digitRunAtStart(n)
+    return currentLongestDigit
 
 def longestIncreasingRun(n):
     return 42
