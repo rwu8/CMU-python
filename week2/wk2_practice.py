@@ -232,23 +232,116 @@ def longestDigitRun(n):
         n = n // 10**digitRunAtStart(n)
     return currentLongestDigit
 
+def increaseDigitRunAtStart(n):
+    last = n % 10
+    longestIncRun = last
+
+    while (n > 0):
+        n = n // 10
+        curr = n % 10
+        if (curr < last):
+            if (curr == 0): break
+            longestIncRun *= 10
+            longestIncRun += curr
+            last = curr
+        else:
+            break
+    return longestIncRun
+
 def longestIncreasingRun(n):
-    return 42
+    if (n == 0): return 0
+    n = abs(n)
+    longestIncRun = 0
+    length = -1
+
+    while (n > 0):
+        if (increaseDigitRunAtStart(n) > longestIncRun):
+            longestIncRun = increaseDigitRunAtStart(n)
+            length = len(str(longestIncRun))
+        elif increaseDigitRunAtStart(n) > longestIncRun and \
+            len(str(increaseDigitRunAtStart(n))) == length:
+            longestIncRun = increaseDigitRunAtStart(n)
+        n = n // 10 ** length
+    longestIncRun = str(longestIncRun)[::-1]
+    return int(longestIncRun)
+
+def isPalindrome(n):
+    if n == int(str(n)[::-1]): return True
+    else: return False
+
+def isPalindromicPrime(n):
+    #checks if the number is prime and a palindrome
+    if (isPrime(n) and isPalindrome(n)):
+        return True
+    else:
+        return False
 
 def nthPalindromicPrime(n):
-    return 42
+    #returns the nth palindromic prime
+    test = 1
+    count = 0
+    while(count <= n):
+        if(isPalindromicPrime(test)):
+            palindromicPrime = test
+            count += 1
+        test += 1
+    return palindromicPrime
+
+def isLeftTruncatablePrime(n):
+    if (isPrime(n)):
+        while (n > 0):
+            if (len(str(n)[1::]) > 0):
+                test = str(n)[1::]
+                test = int(test)
+            else:
+                test = n
+            n = test // 10
+            if (not isPrime(test)): return False
+        return True
+    else: return False
 
 def nthLeftTruncatablePrime(n):
-    return 42
+    test = 1
+    count = 0
+    while (count <= n):
+        if(isLeftTruncatablePrime(test)):
+            leftTruncatablePrime = test
+            count += 1
+        test += 1
+    return leftTruncatablePrime
+
+def isCarolPrime(n):
+    carol = ((2**n - 1)**2 - 2)
+    if (isPrime(carol)): return True
+    else: return False
 
 def nthCarolPrime(n):
-    return 42
+    test = 1
+    count = 0
+    while (count <= n):
+        if(isCarolPrime(test)):
+            carolPrime = test
+            count += 1
+        test += 1
+    return ((2**carolPrime - 1)**2 - 2)
 
 def rotateStringLeft(s, k):
-    return 42
+    if k == 0:
+        return s
+    elif k > len(s):
+        k = k % len(s)
+        if k == 0:
+            return s
+    return s[k:] + s[:k]
 
 def rotateStringRight(s, k):
-    return 42
+    if k == 0:
+        return s
+    elif k > len(s):
+        k = k % len(s)
+        if k == 0:
+            return s
+    return s[-k:] + s[:-k]
 
 def wordWrap(text, width):
     return 42
@@ -788,11 +881,11 @@ def testAll():
     testNthPalindromicPrime()
     testNthLeftTruncatablePrime()
     testNthCarolPrime()
-    testSumOfSquaresOfDigits()
     testRotateStringLeft()
     testRotateStringRight()
     testWordWrap()
     testLargestNumber()
+    testSumOfSquaresOfDigits()
     testIsHappyNumber()
     testNthHappyNumber()
     testNthHappyPrime()
