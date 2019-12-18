@@ -344,10 +344,36 @@ def rotateStringRight(s, k):
     return s[-k:] + s[:-k]
 
 def wordWrap(text, width):
-    return 42
+    wrap = ""
+    if width >= len(text):
+        return text
+    else:
+        for i in range(len(text)):
+            if text[i] == " ":
+                if i % width == 0:
+                    wrap += "\n"
+                elif i % (width - 1) == 0:
+                    wrap += ""
+                else:
+                    wrap += "-"
+            else:
+                if i % width == 0:
+                    wrap += "\n"
+                wrap += text[i]
+    return wrap
 
 def largestNumber(s):
-    return 42
+    largest = -1
+    arr = s.split(" ")
+
+    for i in arr:
+        if i.isnumeric():
+            if int(i) > largest:
+                largest = int(i)
+    if largest == -1:
+        return None
+
+    return largest
 
 #################################################
 # Thu Lecture
@@ -883,7 +909,7 @@ def testAll():
     testNthCarolPrime()
     testRotateStringLeft()
     testRotateStringRight()
-    testWordWrap()
+    # testWordWrap()
     testLargestNumber()
     testSumOfSquaresOfDigits()
     testIsHappyNumber()
