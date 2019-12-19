@@ -380,22 +380,71 @@ def largestNumber(s):
 #################################################
 
 def sumOfSquaresOfDigits(n):
-    return 42
+    total = 0
+
+    while (n > 0):
+        tmp = n % 10
+        n //= 10
+        total += tmp ** 2
+    return total
 
 def isHappyNumber(n):
-    return 42
+    if (n < 1): return False
+    if (n == 1): return True
+
+    while (n != 1 and n != 4):
+        n = sumOfSquaresOfDigits(n)
+    if n == 1:
+        return True
+    if n == 4:
+        return False
 
 def nthHappyNumber(n):
-    return 42
+    test = 1
+    count = 0
+    happyNumber = 0
+
+    while (count <= n):
+        if (isHappyNumber(test)):
+            count += 1
+            happyNumber = test
+        test += 1
+    return happyNumber
 
 def isHappyPrime(n):
-    return 42
+    return isPrime(n) and isHappyNumber(n)
 
 def nthHappyPrime(n):
-    return 42
+    test = 1
+    count = 0
+    happyPrime = 0
+    while (count <= n):
+        if (isHappyPrime(test)):
+            count += 1
+            happyPrime = test
+        test += 1
+    return happyPrime
+
+def countOccurrences(x, d):
+    count = 0
+    while (x > 0):
+        if (x % 10 == d):
+            count += 1
+        x //= 10
+    return count
 
 def mostFrequentDigit(n):
-    return 42
+    if n < 0:
+        n = abs(n)
+    result = 0
+    max_count = 0
+
+    for d in range(10):
+        count = countOccurrences(n, d)
+        if (count > max_count):
+            max_count = count
+            result = d
+    return result
 
 def nthPowerfulNumber(n):
     return 42
