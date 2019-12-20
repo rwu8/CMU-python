@@ -59,18 +59,15 @@ def gcd(x, y):
     else:
         return gcd(y, x % y)
 
+def isPrime(n):
+    if (n < 2):
+        return False
+    for factor in range(2,n):
+        if (n % factor == 0):
+            return False
+    return True
+
 def pi(n):
-    #helper fn
-    def isPrime(num):
-        if num < 2: return False
-        if num % 2 == 0: return num == 2 #2 is only even prime
-        if num % 3 == 0: return num == 3 #3 is the only odd prime
-        sqroot = int(math.sqrt(num))
-
-        for i in range(2, sqroot + 1):
-            if num % i == 0: return False
-        return True
-
     count = 0
     for i in range(n + 1):
         if(isPrime(i)):
@@ -98,14 +95,6 @@ def estimatedPiError(n):
 
 # def sumOfDigits(n):
 #     return 42
-
-def isPrime(n):
-    if (n < 2):
-        return False
-    for factor in range(2,n):
-        if (n % factor == 0):
-            return False
-    return True
 
 def sumOfDigits(n):
     n = abs(n)
@@ -446,14 +435,92 @@ def mostFrequentDigit(n):
             result = d
     return result
 
+def isPowerful(n):
+    if n == 1: return True
+    #divide n repeatedly by 2
+    while (n % 2 == 0):
+        power = 0
+        while (n % 2 == 0):
+            n = n // 2
+            power += 1
+        # if only 2 ^ 1 divides
+        # n (not higher powers), then return false
+        if power == 1:
+            return False
+
+    # if n is not a power of 2, then this loop will execute
+    # repeat above process
+    for factor in range(3, int(math.sqrt(n)) + 1, 2):
+        # find the highest power of factor that divides n
+        power = 0
+        while (n % factor == 0):
+            n //= factor
+            power += 1
+        if power == 1:
+            return False
+
+    return (n == 1)
+
 def nthPowerfulNumber(n):
-    return 42
+    test = 1
+    count = 0
+    powerful = 0
+    while (count <= n):
+        if (isPowerful(test)):
+            count += 1
+            powerful = test
+        test += 1
+    return powerful
+
+def isCircularPrime(n):
+    count = 0
+    test = n
+    num = n
+    # count number of digits
+    while (test > 0):
+        count += 1
+        test //= 10
+
+    while (isPrime(num)):
+        temp = num % 10
+        div = num // 10
+        num = int(math.pow(10, count - 1) * temp) + div
+
+        # if all permutations are checked; e.g. num is the
+        # same as the original n
+        if num == n: return True
+    return False
 
 def nthCircularPrime(n):
-    return 42
+    test = 1
+    count = 0
+    circular = 0
+    while (count <= n):
+        if (isCircularPrime(test)):
+            count += 1
+            circular = test
+        test += 1
+    return circular
 
 def findZeroWithBisection(f, x0, x1, epsilon):
-    return 42
+    xmid = 0
+    diff = 1
+    if (f(x0) > 0 and f(x1) > 0) or \
+            (f(x0) < 0 and f(x1) < 0): # x0 and x1 are the same sign
+        return None
+
+    while (diff > epsilon):
+        xmid = (x1 + x0) / 2 # midpoint between x0 and x1
+        diff = abs(x1 - x0)
+
+        if f(xmid) == 0:
+            return xmid
+        elif (f(xmid) > 0 and f(x0) > 0) or \
+                (f(xmid) < 0 and f(x0) < 0): # xmid and x0 are the same sign
+            x0 = xmid
+        else:
+            x1 = xmid
+    return xmid
 
 def longestSubpalindrome(s):
     return 42
@@ -955,7 +1022,7 @@ def testAll():
     testLongestIncreasingRun()
     testNthPalindromicPrime()
     testNthLeftTruncatablePrime()
-    testNthCarolPrime()
+    #testNthCarolPrime()
     testRotateStringLeft()
     testRotateStringRight()
     # testWordWrap()
