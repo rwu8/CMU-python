@@ -561,14 +561,17 @@ def leastFrequentLetters(s):
 
     for c in s:
         if c.isalpha(): #check is char is alpha
-            if s.count(c) < min: #if new min, reset min and tmp char list
+            # if new min, reset min and tmp char list
+            if s.count(c) < min:
                 min = s.count(c)
                 tmp = c
-            elif s.count(c) == min: #otherwise if the counts are equal, add new char to list
+            # otherwise if the counts are equal, add new char to list
+            elif s.count(c) == min:
                 tmp += c
 
+    # create a list to iterate through for sorting
     arr = []
-    for c in tmp: #create a list to iterate through for sorting
+    for c in tmp:
         arr.append(c)
 
     for i in range(len(arr)):
@@ -582,13 +585,52 @@ def leastFrequentLetters(s):
 #################################################
 
 def sameChars(s1, s2):
-    return 42
+    if s1 == "" and s2 == "": return True
+    if not isinstance(s1,  str) or \
+            not isinstance(s2, str): return False
+
+    for c in s1:
+        if c not in s2:
+            return False
+    for c in s2:
+        if c not in s1:
+            return False
+    return True
 
 def mostFrequentLetters(s):
-    return 42
+    s = s.upper()
+    count = 0
+    tmp = ""
+
+    for c in s:
+        if c.isalpha(): #check is char is alpha
+            if s.count(c) == count:
+                if c in tmp:
+                    continue
+                tmp += c
+            elif s.count(c) > count:
+                tmp = c
+                count = s.count(c)
+
+    # create a list to iterate through for sorting
+    arr = []
+    for c in tmp:
+        arr.append(c)
+
+    for i in range(len(arr)):
+        for j in range(len(arr) - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return "".join(arr)
+
 
 def areAnagrams(s1, s2):
-    return 42
+    s1 = s1.lower()
+    s2 = s2.lower()
+    for c in s1:
+        if s1.count(c) != s2.count(c):
+            return False
+    return True
 
 def collapseWhitespace(s):
     return 42
