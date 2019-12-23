@@ -552,28 +552,30 @@ def longestSubpalindrome(s):
             res = tmp
     return res
 
-def bubbleSort(alist):
-    for j in range(len(alist)-1,0,-1):
-        for i in range(j):
-            if alist[i]>alist[i+1]:
-                temp = alist[i]
-                alist[i] = alist[i+1]
-                alist[i+1] = temp
-
 def leastFrequentLetters(s):
+    if s == "": return ""
+
     s = s.lower()
     tmp = ""
     min = s.count(s[0])
 
     for c in s:
-        if c.isalpha():
-            if s.count(c) < min:
+        if c.isalpha(): #check is char is alpha
+            if s.count(c) < min: #if new min, reset min and tmp char list
                 min = s.count(c)
                 tmp = c
-            elif s.count(c) == min:
+            elif s.count(c) == min: #otherwise if the counts are equal, add new char to list
                 tmp += c
 
-    return tmp
+    arr = []
+    for c in tmp: #create a list to iterate through for sorting
+        arr.append(c)
+
+    for i in range(len(arr)):
+        for j in range(len(arr) - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return "".join(arr)
 
 #################################################
 # Extra Practice
