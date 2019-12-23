@@ -522,11 +522,58 @@ def findZeroWithBisection(f, x0, x1, epsilon):
             x1 = xmid
     return xmid
 
+# get the longest palindrome, l, r are the middle indexes
+# from inner to outer
+# get the longest palindrome, l, r are the middle indexes
+# from inner to outer
+def longestSubpalindromehelper(s, l, r):
+    while l >= 0 and r < len(s) \
+            and s[l] == s[r]:
+        l -= 1
+        r += 1
+    return s[l + 1:r]
+
 def longestSubpalindrome(s):
-    return 42
+    res = ""
+    for i in range(len(s)):
+        # odd case, like "aba"
+        tmp = longestSubpalindromehelper(s, i, i)
+        if len(tmp) == len(res):
+            if (tmp[0] > res[0]):
+                res = tmp
+        elif len(tmp) > len(res):
+            res = tmp
+        # even case, like "abba"
+        tmp = longestSubpalindromehelper(s, i, i + 1)
+        if len(tmp) == len(res):
+            if (tmp[0] > res[0]):
+                res = tmp
+        elif len(tmp) > len(res):
+            res = tmp
+    return res
+
+def bubbleSort(alist):
+    for j in range(len(alist)-1,0,-1):
+        for i in range(j):
+            if alist[i]>alist[i+1]:
+                temp = alist[i]
+                alist[i] = alist[i+1]
+                alist[i+1] = temp
 
 def leastFrequentLetters(s):
-    return 42
+    s = s.lower()
+    tmp = ""
+    min = s.count(s[0])
+
+    for c in s:
+        if c.isalpha():
+            if s.count(c) < min:
+                min = s.count(c)
+                tmp = c
+            elif s.count(c) == min:
+                tmp += c
+
+    return tmp
 
 #################################################
 # Extra Practice
