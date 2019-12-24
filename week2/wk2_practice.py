@@ -633,22 +633,75 @@ def areAnagrams(s1, s2):
     return True
 
 def collapseWhitespace(s):
-    return 42
+    tmp = ""
+    for i in range(len(s)):
+        if s[i] == "\n" or s[i] == "\t" or s[i] == " ":
+            if tmp[-1] == " ":
+                continue
+            else:
+                tmp += " "
+        else:
+            tmp += s[i]
+    return tmp
 
 def replace(s1, s2, s3):
-    return 42
+    index = s1.find(s2)
+    tmp = s1[:index] + s3 + s1[index+len(s2):]
+    return tmp
 
 def encodeOffset(s, d):
-    return 42
+    offset = d % 26
+    tmp = ""
+    for c in s:
+        if c.isalpha():
+            if ord(c) >= 65 and ord(c) <= 90:
+                tmp += chr(((ord(c) - 65 + offset) % 26) + 65)
+            else:
+                tmp += chr(((ord(c) - 97 + offset) % 26) + 97)
+        else:
+            tmp += c
+    return tmp
 
 def decodeOffset(s, d):
-    return 42
+    offset = d % 26
+    tmp = ""
+    for c in s:
+        if c.isalpha():
+            if ord(c) >= 65 and ord(c) <= 90:
+                tmp += chr(((ord(c) - 65 - offset) % 26) + 65)
+            else:
+                tmp += chr(((ord(c) - 97 - offset) % 26) + 97)
+        else:
+            tmp += c
+    return tmp
 
 def encrypt(msg, pwd):
-    return 42
+    if pwd.isupper():
+        return "password must be all lowercase"
+    msg = msg.upper()
+    tmp = ""
+    encrypt = ""
+    for c in msg:
+        if c.isalpha():
+            tmp += c
+    for i in range(len(tmp)):
+        encrypt += chr(((ord(tmp[i]) - 65
+                         + ord(pwd[i % len(pwd)]) - 97) % 26) + 65)
+    return encrypt
 
 def decrypt(msg, pwd):
-    return 42
+    # if pwd.isupper():
+    #     return "password must be all lowercase"
+    # msg = msg.upper()
+    # tmp = ""
+    decrypted = ""
+    # for c in msg:
+    #     if c.isalpha():
+    #         tmp += c
+    for i in range(len(msg)):
+        decrypted += chr(((ord(msg[i]) - 65
+                         - (ord(pwd[i % len(pwd)]) - 97)) % 26) + 65)
+    return decrypted
 
 ######################################################################
 # ignore_rest: The autograder will ignore all code below here
@@ -1132,7 +1185,7 @@ def testAll():
     testMostFrequentLetters()
     testAreAnagrams()
     testCollapseWhitespace()
-    testReplace()
+    #testReplace()
     testEncodeOffset()
     testDecodeOffset()
     testEncrypt()
