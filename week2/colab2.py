@@ -27,19 +27,67 @@ def roundHalfUp(d):
 #################################################
 
 def rotateNumber(x):
-    return 42
+    count = len(str(x))
+    ones = x % 10
+    div = x // 10
+    num = int(math.pow(10, count - 1) * ones) + div
+
+    return num
+
+def isPrime(n):
+    if (n < 2):
+        return False
+    for factor in range(2,n):
+        if (n % factor == 0):
+            return False
+    return True
 
 def isCircularPrime(x):
-    return 42
+    num = x
+
+    while (isPrime(num)):
+        num = rotateNumber(num)
+        # if all permutations are checked; e.g. num is the
+        # same as the original n
+        if num == x: return True
+    return False
 
 def nthCircularPrime(n):
-    return 42
+    test = 1
+    count = 0
+    circular = 0
+    while (count <= n):
+        if (isCircularPrime(test)):
+            count += 1
+            circular = test
+        test += 1
+    return circular
 
 def countLowercaseUpToPercent(s):
-    return 42
+    count = 0
+
+    for c in s:
+        if c.islower():
+            count += 1
+        elif c == '%':
+            break
+    return count
 
 def longestCommonSubstring(s1, s2):
-    return 42
+    answer = ''
+    len1, len2 = len(s2), len(s2)
+
+    for i in range(len1):
+        match = ''
+        for j in range(len2):
+            if (i + j < len1 and s1[i + j] == s2[j]):
+                match += s2[j]
+            else:
+                if (len(match) > len(answer)):
+                    answer = match
+                match = ''
+
+    return answer
 
 def gradebookSummary(gradebookFilename):
     return 42
