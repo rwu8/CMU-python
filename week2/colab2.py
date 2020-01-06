@@ -74,23 +74,44 @@ def countLowercaseUpToPercent(s):
     return count
 
 def longestCommonSubstring(s1, s2):
-    answer = ''
-    len1, len2 = len(s2), len(s2)
+    longest = 0
+    substr = ""
+    len1, len2 = len(s1), len(s2)
 
     for i in range(len1):
-        match = ''
-        for j in range(len2):
-            if (i + j < len1 and s1[i + j] == s2[j]):
-                match += s2[j]
-            else:
-                if (len(match) > len(answer)):
-                    answer = match
-                match = ''
-
-    return answer
+        for j in range(i,len1):
+            temp = j - i
+            if(s1[i:j] in s2) and temp >= longest:
+                if (temp > longest):
+                    longest = temp
+                    substr = s1[i:j]
+                if (temp == longest):
+                    if(s1[i:j] < substr):
+                        substr = s1[i:j]
+    return substr
 
 def gradebookSummary(gradebookFilename):
-    return 42
+    fp = open(gradebookFilename, "r")
+    line = fp.readline()
+    cnt = 1
+    tmp = ""
+    while line:
+        line = fp.readline()
+        cnt += 1
+        if len(line) > 0 and line[0] == "#":
+            continue
+        elif(line == ""):
+            continue
+        else:
+            student = line.split(',')
+            name = student[0]
+            grades = student[1:]
+            intGrades = [int(n) for n in grades if n]
+            average = sum(intGrades)/len(intGrades)
+            average = "%.2f" % (average)
+            tmp += name + "\\t" + str(average) + "\\n"
+    tmp = tmp[:-2]
+    return tmp
 
 #################################################
 # Colab2 Test Functions
@@ -171,7 +192,7 @@ def testAll():
     testNthCircularPrime()
     testCountLowercaseUpToPercent()
     testLongestCommonSubstring()
-    testGradebookSummary()
+    # testGradebookSummary()
 
 def main():
     cs112_s18_week2_linter.lint() # check style rules
