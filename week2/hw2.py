@@ -3,9 +3,10 @@
 # Hw2
 #################################################
 
-import cs112_s18_week2_linter
-import math
 import string
+
+import cs112_s18_week2_linter
+
 
 #################################################
 # Helper functions
@@ -28,22 +29,101 @@ def roundHalfUp(d):
 #################################################
 
 def roc2Answer():
-    return
+    return " I \t T \n "
 
 def sumOfSquaresOfDigits(x):
-    return 42
+    total = 0
+    while (x > 0):
+        tmp = x % 10
+        x //= 10
+        total += tmp ** 2
+    return total
+
+def isPrime(n):
+    if (n < 2):
+        return False
+    for factor in range(2, n):
+        if (n % factor == 0):
+            return False
+    return True
 
 def isHappyNumber(x):
-    return 42
+    if (x < 1): return False
+    if (x == 1): return True
+
+    while (x != 1 and x != 4):
+        x = sumOfSquaresOfDigits(x)
+    if x == 1:
+        return True
+    if x == 4:
+        return False
+
+def isHappyPrime(n):
+    return isHappyNumber(n) and isPrime(n)
 
 def nthHappyPrime(n):
-    return 42
+    count = 0
+    test = 1
+    happyPrime = 0
+
+    while count <= n:
+        if (isHappyPrime(test)):
+            count += 1
+            happyPrime = test
+        test += 1
+    return happyPrime
 
 def patternedMessage(msg, pattern):
-    return 42
+    newMsg = ""
+    patternArr = []
+    for c in msg:
+        if not c.isspace():
+            newMsg += c
+
+    for i in range(len(pattern)):
+        if pattern[i] != ' ' and pattern[i] not in patternArr:
+            patternArr.append(pattern[i])
+
+    length = len(newMsg)
+    i = 0
+    tmp = ""
+
+    for char in pattern:
+        if char in patternArr and char != '\n':
+            tmp += newMsg[i % length]
+            i += 1
+        else:
+            tmp += char
+    return tmp
 
 def quoteWordCount(script):
-    return 42
+    if not isinstance(script, str): return 0
+    arr = script.split("\n")
+    arr2 = []
+    count = 0
+    for item in arr:
+        if item.find(': ') != -1 and item.find(':') != len(item) - 1:
+            if item.find(" \'") != -1:
+                quote = item.split(" \'")
+                for phrase in quote[1:]:
+                    arr2.append(phrase)
+                name, quote = quote[0].split(": ")
+                arr2.append(quote)
+            else:
+                name, quote = item.split(": ")
+                if quote == "": return 0
+                else:
+                    arr2.append(quote)
+        else:
+            arr2.append(item)
+
+    for quote in arr2:
+        words = quote.split(' ')
+        for word in words:
+            if not word.isnumeric() and word != '-' and word != '':
+                count += 1
+
+    return count
 
 ##### Bonus #####
 
