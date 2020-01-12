@@ -119,7 +119,9 @@ def nthKaprekarNumber(n):
 def mostFrequentLetters(s):
     lowercase = s.lower()
     uniqueLetters = []
-    count = []
+    counted = []
+    uniqueCount = []
+    tmp = []
     ans = ""
     for char in lowercase:
         if char not in uniqueLetters and char.isalpha():
@@ -127,18 +129,32 @@ def mostFrequentLetters(s):
 
     if len(uniqueLetters) == 0: return ""
 
-    for i in len(range(uniqueLetters)):
-        count.append(lowercase.count(uniqueLetters[i]))
+    for i in range(len(uniqueLetters)):
+        counted.append(lowercase.count(uniqueLetters[i]))
 
-    while len(uniqueLetters):
-        maxCount = max(count)
-        if uniqueLetters.count(maxCount) == 1:
-            i =  uniqueLetters.find(maxCount)
-            ans += uniqueLetters[i]
-            uniqueLetters.remove(uniqueLetters[i])
-        else:
+    for num in counted:
+        if num not in uniqueCount:
+            uniqueCount.append(num)
 
-    return 42
+    while uniqueCount:
+        maxNum = max(uniqueCount)
+
+        for j in range(len(counted)):
+            if maxNum == counted[j]:
+                tmp.append(uniqueLetters[j])
+
+        # alphabetically sort the list
+        for k in range(len(tmp)):
+            # find the position of the smallest item after/including k
+            lowest = tmp[k:].index(min(tmp[k:])) + k
+            # # swap it into the k-th place
+            tmp[k], tmp[lowest] = tmp[lowest], tmp[k]
+
+        ans += ''.join(tmp)
+        uniqueCount.remove(maxNum)
+        tmp = []
+
+    return ans
 
 #################################################
 # Colab3 Test Functions
