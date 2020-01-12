@@ -1,0 +1,103 @@
+check2.txt
+
+Edit this file and then submit it to Autolab.
+
+Be sure to watch the videos very carefully, and not just
+skip ahead to the parts required to answer these questions!
+
+Be *very brief* in your answers!  Seriously.  Brief.
+
+---------------------------------------------------------------------
+
+1. Your full name and andrew id:
+
+2. The full names and andrew id's of your groupmates (if you worked collaboratively).
+
+
+
+3. Loops Section 1: For Loops
+
+3.1. Briefly explain the meaning of each value m, n, and k in the expression range(m, n, k).
+
+3.2. Run the last example of sumOfOddsFromMToN in the course notes, using the "Run" button in the course notes, so you are running it in Brython (in the browser).  Then, edit the code so that the third value in the range expression is the integer 0 instead of the integer 2.  Run it.  It will crash.  Copy-paste the error message here.  (Aside: is this what you expected?)
+
+
+4. Loops Section 2: Nested For Loops
+
+4.1. In the first example in this section, why do we use end="" in the inner print statement, but not in the outer print statement?
+
+4.2. Modify the code for the mystery star shape so that it prints the same shape, only upside down (so the last row becomes the first row, and so on).  Include your code here.
+
+
+5. Loops Section 3: While Loops
+
+5.1. When in general would you prefer a "while" loop to a "for" loop?
+
+5.2. Why do we need to use a while loop in the leftmostDigit example?
+
+5.3. What is the bug in the buggySumToN example?
+
+
+6. Loops Section 4: Break and Continue
+
+6.1. What is the main difference between break and continue?
+
+
+7. Strings Section 1: String Literals
+
+7.1. Why is len('a\nb') equal to 3 and not 4?
+
+7.2. List a character that is easier to include in a string delimited by double-quotes rather than single-quotes.
+
+7.3. List each escape sequence mentioned in the video (like \n) and what they mean.
+
+
+8. Strings Section 2: Some String Constants
+
+8.1. What is type(string.digits)?  Why?
+
+
+9. Strings Section 3: Some String Operators
+
+9.1. For any string s where len(s)>1, is it definitely true that ((s[1:] in s) == True)?
+
+9.2. What is the empty string?  What is its type?  What is its length?
+
+9.3. What is "abcde"[-1]?
+
+
+10. Strings Section 4: Looping Over Strings
+
+10.1. Briefly, what is the difference between split and splitlines?
+
+
+11. Strings Section 6: Strings are Immutable
+
+11.1. What does it mean that Strings are immutable?
+
+
+12. Strings Section 7: Some String-related Built-In Functions
+
+12.1. What is the difference between a string method and a string function?
+
+12.2. What is the difference between chr and ord?
+
+
+13. Strings Section 8: Some String Methods
+
+13.1. What is the difference between lower and islower?
+
+13.2. Write a single line of code that replaces all of the periods in a string s with exclamation points.
+
+13.3. What is the difference between find and index?
+
+
+14. Strings Section 9: String Formatting
+
+14.1. How do you left-align text using the string formatting operator?
+
+
+15. Strings Section 10: Basic File IO
+
+15.1. Why does the Basic File IO example crash if you run it in the browser?
+

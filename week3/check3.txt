@@ -1,0 +1,55 @@
+check3.txt
+
+Edit this file and then submit it to Autolab.
+
+Be sure to watch the videos very carefully, and not just
+skip ahead to the parts required to answer these questions!
+
+Be *very brief* in your answers!  Seriously.  Brief.
+
+---------------------------------------------------------------------
+
+3. Algorithmic Thinking
+
+3.1 What is the third step in Polya's 'How to Solve It' method? Carry out the plan.
+
+3.2 In one sentence, describe what 'mental set' means. A mental set describes one's inclination to solve problems in such a way that has proved successful in previous experiences.
+
+3.3 When should test cases be generated? Test cases should be written for every problem/function.
+
+3.4 There are several features that we can consider when ranking algorithms. Currently, which one matters the most to you? Clarity is important to help with debugging and have others understand your code.
+
+3.5 When can debugging occur in the problem solving process? Debugging can help identify syntax, runtime or logical errors with the code.
+
+3.6 What helper functions were used to simplify nthThreeDigitPrime? isThreeDigitPrime, hasThreeDigits and isPrime.
+
+
+4. Testing and Exceptions
+
+4.1 What are 'edge' test cases? Edge cases are pairs of inputs that test different choice points in the code.
+
+4.2 Why can't we test functions that use print instead of return the normal way? Since we can''t assert that a function's returned value matches expectations (nothing is returned).
+
+4.3 Why do we never reach the line "This line will never run!" in the first example in Section 4? Due to the error that occurs right before the line and is caught by the except block.
+
+4.4 In the third example in Section 4, change the variable shouldCrash from True to False. What happens when you run the code now? The code will enter the else block and assert False.
+
+
+5. Debugging
+
+5.1 What's one tip for reducing the number of bugs you generate in code? Write code with good style
+
+5.2 What's the first thing you should do when you get a syntax error? Read the error message
+
+5.3 How can you find the line number where a runtime error occurs? It will appear at the bottom of the stack trace
+
+5.4 Why was it a bad idea to just use print(n) while debugging a logical error? You will not know where exactly the print statement is occurring in the code (if there are multiple). 
+
+
+6. Style
+
+6.1 Comments should be concise, clear, and... ? efficient
+
+6.2 Give an example of an appropriate variable name for an integer that represents the number of eggs in a basket. eggsInBasket
+
+6.3 What is a magic number? A magic number is one that has multiple meanings. 
