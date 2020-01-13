@@ -102,11 +102,64 @@ def nthUndulatingNumber(n):
 
 ### ALGORITHMIC THINKING PROBLEM ###
 
+def isPradish(n):
+    length = len(str(n))
+    half = roundHalfUp(length/2)
+    total = 0
+    nums = []
+    if length % 2 != 0: return False
+    for i in range(length):
+        nums.append(n % 10)
+        n = n // 10
+    total = sum(nums)
+    if length != total: return False
+    if sum(nums[:half]) != sum(nums[half:]): return False
+    return True
+
 def nthPradishNumber(n):
-    return 42
+    test = pradish = 0
+    count = 0
+
+    while count <= n:
+        test += 1
+        if isPradish(test):
+            count += 1
+            pradish = test
+    return pradish
+
+# get the longest palindrome, l, r are the middle indexes
+# from inner to outer
+# get the longest palindrome, l, r are the middle indexes
+# from inner to outer
+def expandFromMiddle(s, l, r):
+    if s == None or l > r: return 0
+
+    while l >= 0 and r < len(s) \
+            and s[l] == s[r]:
+        l -= 1
+        r += 1
+    return s[l + 1:r]
 
 def longestSubpalindrome(s):
-    return 42
+    if s == None or len(s) < 1: return ""
+
+    res = ""
+    for i in range(len(s)):
+        # odd case, like "aba"
+        tmp = expandFromMiddle(s, i, i)
+        if len(tmp) == len(res):
+            if (tmp[0] > res[0]):
+                res = tmp
+        elif len(tmp) > len(res):
+            res = tmp
+        # even case, like "abba"
+        tmp = expandFromMiddle(s, i, i + 1)
+        if len(tmp) == len(res):
+            if (tmp[0] > res[0]):
+                res = tmp
+        elif len(tmp) > len(res):
+            res = tmp
+    return res
 
 ##### Bonus #####
 
