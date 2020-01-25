@@ -1,0 +1,50 @@
+check4.txt
+
+3. 1d Lists and Tuples
+
+3.1: Why is type([1,3,5,7]) == type(["a", "b", "c", "d"]) True? Because we are comparing the type of 'list' for both.
+
+3.2: What do you think a[:2] is, if a = [2, 3, 5, 7, 11, 13]? Check to see if you're right after making a prediction. a[:2] = [2,3]
+
+3.3: What problems could arise in your code due to function parameters being aliases? Since aliasing refers to the same list, we can inadvertently modify a global variable due to aliasing.
+
+3.4: Why should you check (if value in a) before calling a.index(value)? The index function crashes when item is not in list.
+
+3.5: If a = [2, 3, 4, 5], what happens when you run a.insert(1, 42)? A = [2, 42, 3, 4, 5]
+
+3.6: What happens if you call .pop() on an empty list? You can an IndexError: pop from empty list
+
+3.7: We demonstrated two correct ways to swap elements in a list. Which do you think is clearer? Swapping with parallel (tuple) assignment is more clear and less code.
+
+3.8: Why is it a bad idea to modify a list while looping through it? Destructively modifying a list while looping through it can cause the loop to crash (index error).
+
+3.9: Is [] < [0]? Why or why not? True, because the element 0 is larger.
+
+3.10: We demonstrated multiple ways to make a non-aliased copy of a. Which one do you think is best and why? 
+
+a = [2, 3]
+b = copy.copy(a)
+c = a[:]
+d = a + [ ]
+e = list(a)
+f = copy.deepcopy(a)
+g = sorted(a)
+
+I prefer slicing the list, [:] to copy the outside list or copy.deepcopy to make a deep copy
+
+3.11: Write a line of code that sorts a list of strings based on the length of the strings. strings.sort()
+
+3.12: Why do some list functions not use return statements? Because they destructively modify the list in place.
+
+3.13: How are tuples different from lists? Tuples are immutable lists.
+
+3.14: Write a list comprehension that has the same result as the following code:
+
+lst = []
+for i in range(10):
+    lst.append(i * 3)
+
+lst = [(i * 3) for i in range(10)]
+
+3.15: We can change the delimiter (the text that separates values) in a piece of text using a combination of split and join. Write a line of code that change's the delimiter of the string s from "\t" to ",".
+s = "".join(s.split(), ",")
