@@ -204,11 +204,42 @@ def isRotation(a1, a2):
     size2 = len(a2)
 
     if size1 != size2: return False
-
-    doubleArray = a1 + a2
+    # concat first string with itself
+    doubleArray = a1 + a1
     return check_sublist(doubleArray, a2)
 
 def nondestructiveRotateList(a, n):
+    if n == 0: return a
+    rotated = a[-n:] + a[:-n]
+    return rotated
+
+
+def destructiveRotateList(a, n):
+    if n == 0: return a
+    length = len(a)
+    a += [a[(i - n) % len(a)] for i in a]
+    del a[:length]
+
+def moveToBack(a, b):
+    for num in b:
+        if num in a:
+            count = a.count(num)
+            for i in range(count):
+                idx = a.index(num)
+                del a[idx]
+                a.append(num)
+    return a
+
+def binaryListToDecmial(a):
+    decimal = 0
+    rev = a[::-1]
+
+    for i in range(len(a)):
+        if rev[i] == 1:
+            decimal += 2**i
+    return decimal
+
+def smallestDifference(a):
     return 42
 
 #################################################
@@ -263,6 +294,27 @@ def testisRotation():
     assert (isRotation([2,3,4,5,6], [4,5,6,2,3]) == True)
     print("Passed!")
 
+def testnondestructiveRotateList():
+    print("Testing nondestructiveRotateList()...", end="")
+    assert (nondestructiveRotateList([1, 2, 3, 4], 1) == [4, 1, 2, 3])
+    assert (nondestructiveRotateList([4, 3, 2, 6, 5], 2) == [6, 5, 4, 3, 2])
+    assert (nondestructiveRotateList([1, 2, 3], 0) == [1, 2, 3])
+    assert (nondestructiveRotateList([1, 2, 3], -1) == [2, 3, 1])
+    print("Passed!")
+
+def testMoveToBack():
+    print("Testing moveToBack()...", end="")
+    assert(moveToBack([2, 3, 3, 4, 1, 5], [3]) == [2, 4, 1, 5, 3, 3])
+    assert(moveToBack([2, 3, 3, 4, 1, 5], [2, 3]) == [4, 1, 5, 2, 3, 3])
+    assert(moveToBack([2, 3, 3, 4, 1, 5], [3, 2]) == [4, 1, 5, 3, 3, 2])
+    print("Passed!")
+
+def testBinaryListToDecimal():
+    print("Testing binaryListToDecmial()...", end="")
+    assert(binaryListToDecmial([1, 0]) == 2)
+    assert(binaryListToDecmial([1, 0, 1, 1]) == 11)
+    assert(binaryListToDecmial([1, 1, 0, 1]) == 13)
+    print("Passed!")
 
 #################################################
 # Hw4 Main
@@ -276,6 +328,9 @@ def testAll():
     testisSorted()
     testdotProduct()
     testisRotation()
+    testnondestructiveRotateList()
+    testMoveToBack()
+    testBinaryListToDecimal()
 
 def main():
     cs112_s18_week4_linter.lint() # check style rules
