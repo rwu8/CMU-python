@@ -240,7 +240,35 @@ def binaryListToDecmial(a):
     return decimal
 
 def smallestDifference(a):
+    if len(a) == 0: return -1
+    if len(a) == 2: return abs(a[0] - a[1])
+    arr = sorted(a)
+    minDiff = 10**20
+
+    for i in range(len(arr) - 1):
+        if (abs(arr[i + 1] - arr[i]) < minDiff):
+                minDiff = abs(arr[i + 1] - arr[i])
+
+    return minDiff
+
+def split(s, delimiter):
+    if delimiter not in s: return [s]
+    arr = []
+    tmp = ""
+    for i in range(len(s)):
+        if s[i] != delimiter:
+            tmp += s[i]
+        elif s[i] == delimiter:
+            arr.append(tmp)
+            tmp = ""
+    arr.append(tmp)
+    return arr
+
+def join(L, delimiter):
     return 42
+
+
+
 
 #################################################
 # Hw4 Test Scripts
@@ -316,6 +344,19 @@ def testBinaryListToDecimal():
     assert(binaryListToDecmial([1, 1, 0, 1]) == 13)
     print("Passed!")
 
+def testSmallestDifference():
+    print("Testing smallestDifference()...", end="")
+    assert (smallestDifference([1, 5, 3, 19, 18, 25] ) == 1)
+    assert (smallestDifference([30, 5, 20, 9]) == 4)
+    assert (smallestDifference([]) == -1)
+    print("Passed!")
+
+def testSplit():
+    print("Testing split()...", end="")
+    assert (split("ab,cd,efg", ",") == ["ab", "cd", "efg"])
+    assert (split("this-is-a-test", "-") == ["this", "is", "a", "test"])
+    print("Passed!")
+
 #################################################
 # Hw4 Main
 #################################################
@@ -331,6 +372,8 @@ def testAll():
     testnondestructiveRotateList()
     testMoveToBack()
     testBinaryListToDecimal()
+    testSmallestDifference()
+    testSplit()
 
 def main():
     cs112_s18_week4_linter.lint() # check style rules
