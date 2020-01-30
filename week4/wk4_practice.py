@@ -265,9 +265,32 @@ def split(s, delimiter):
     return arr
 
 def join(L, delimiter):
+    tmp = ""
+
+    for c in L:
+        if c != L[-1]:
+            tmp += c + delimiter
+        else:
+            tmp += c
+    return tmp
+
+def repeatingPattern(a):
+    storage = []
+    # lengths from 1 to half the list's length
+    for length in range(1, len(a) // 2 + 1):
+        #generate a  my_dict of all sub-lists of size length
+        for start in range(0, len(a) - length + 1):
+            storage.append(a[start:start + length])
+
+    for c in storage:
+        count = storage.count(c)
+        if a == count * c:
+            return True
+    return False
+
+
+def mostAnagrams(wordList):
     return 42
-
-
 
 
 #################################################
@@ -357,6 +380,16 @@ def testSplit():
     assert (split("this-is-a-test", "-") == ["this", "is", "a", "test"])
     print("Passed!")
 
+def testJoin():
+    print("Testing join()...", end="")
+    assert(join(["ab", "cd", "efg"], ",") == "ab,cd,efg")
+    print("Passed!")
+
+def testRepeatingPatterns():
+    print("Testing repeatingPattern()...", end="")
+    assert(repeatingPattern([1, 2, 3, 1, 2, 3]) == True)
+    print("Passed!")
+
 #################################################
 # Hw4 Main
 #################################################
@@ -374,6 +407,7 @@ def testAll():
     testBinaryListToDecimal()
     testSmallestDifference()
     testSplit()
+    testJoin()
 
 def main():
     cs112_s18_week4_linter.lint() # check style rules
