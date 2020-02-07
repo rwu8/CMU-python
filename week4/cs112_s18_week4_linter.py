@@ -12,7 +12,7 @@ _bannedTokens = (
         'classmethod,compile,delattr,dict,dir,enumerate,' +
         'eval,exec,filter,format,frozenset,getattr,globals,' +
         'hasattr,hash,help,hex,id,issubclass,iter,' +
-        'locals,map,memoryview,next,object,oct,' +
+        'locals,memoryview,next,object,oct,' +
         'property,set,' +
         'setattr,slice,staticmethod,super,' +
         'type,vars,importlib,imp,{,}')

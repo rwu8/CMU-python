@@ -278,7 +278,7 @@ def repeatingPattern(a):
     storage = []
     # lengths from 1 to half the list's length
     for length in range(1, len(a) // 2 + 1):
-        #generate a  my_dict of all sub-lists of size length
+        # generate a my_dict of all sub-lists of size length
         for start in range(0, len(a) - length + 1):
             storage.append(a[start:start + length])
 
@@ -288,10 +288,102 @@ def repeatingPattern(a):
             return True
     return False
 
+def normalize(word):
+    word = word.strip().lower() # sanitize it
+    word = ''.join(sorted(word))
+    return word
+
+from collections import Counter
 
 def mostAnagrams(wordList):
-    return 42
+    anagrams = []
+    for i in range(len(wordList)):
+        # Counter checks the number of times each letter appears in each word
+        counter_word = Counter(wordList[i])
+        for j in range(i+1, len(wordList)):
+            other_word = wordList[j]
+            if Counter(other_word) == counter_word:
+                anagrams.append(other_word)
+    anagrams.sort()
 
+    return anagrams[0]
+#mostAnagrams(['carets', 'pass', 'stop',
+# 'crates', 'reacts', 'recast', 'traces'])
+
+def plus3(x):
+    return (x+3)
+
+def map(f, a):
+    solution = []
+
+    for item in a:
+        solution.append(f(item))
+    return solution
+
+def fibonacci(n):
+    if n < 0:
+        return -1
+    elif n == 1:
+        return 0
+    elif n == 2:
+        return 1
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+
+def firstNEvenFibonacciNumbers(n):
+    arr = []
+    count = 0
+    test = 2
+
+    while count < n:
+        tmp = fibonacci(test)
+        if tmp % 2 == 0:
+            arr.append(tmp)
+            count += 1
+        test += 1
+    return arr
+
+def mostCommonName(a):
+    count = []
+    solution = []
+    maxNum = -1
+
+    for name in a:
+        count.append(a.count(name))
+    for num in count:
+        maxNum = max(maxNum, num)
+
+    for i in range(len(count)):
+        if count[i] == maxNum and a[i] not in solution:
+            solution.append(a[i])
+
+    if len(solution) == 1:
+        return solution[0]
+    else:
+        return sorted(solution)
+
+def histogram(a):
+    hist = ['60-69:', '70-79:', '80-89:', '90++ :' ]
+    counts = [0]*4
+    solution = ''
+    for grade in a:
+        if grade >= 60 and grade < 70:
+            counts[0] += 1
+        elif grade >= 70 and grade < 80:
+            counts[1] += 1
+        elif grade >= 80 and grade < 90:
+            counts[2] += 1
+        elif grade > 90:
+            counts[3] += 1
+
+    for i in range(len(counts)):
+        stars = '*' * counts[i]
+        solution += hist[i] + ' ' + stars + '\n'
+
+    return solution
+
+def nearestWords(wordList, word):
+    return 42
 
 #################################################
 # Hw4 Test Scripts
@@ -390,6 +482,23 @@ def testRepeatingPatterns():
     assert(repeatingPattern([1, 2, 3, 1, 2, 3]) == True)
     print("Passed!")
 
+def testMap():
+    print("Testing map()...", end="")
+    assert (map(plus3, [2,4,7]) == [5,7,10])
+    print("Passed!")
+
+def testfirstNEvenFibonacciNumbers():
+    print("Testing firstNEvenFibonacciNumbers()...", end="")
+    assert (firstNEvenFibonacciNumbers(4) == [2, 8, 34, 144])
+    print("Passed!")
+
+def testMostCommonName():
+    print("Testing mostCommonName()...", end="")
+    assert(mostCommonName(['Jane', 'Aaron', 'Cindy', 'Aaron']) == "Aaron")
+    assert(mostCommonName(['Jane', 'Aaron', 'Jane', 'Cindy', 'Aaron'])
+           == ['Aaron', 'Jane'])
+    print("Passed!")
+
 #################################################
 # Hw4 Main
 #################################################
@@ -408,6 +517,9 @@ def testAll():
     testSmallestDifference()
     testSplit()
     testJoin()
+    testMap()
+    testfirstNEvenFibonacciNumbers()
+    testMostCommonName()
 
 def main():
     cs112_s18_week4_linter.lint() # check style rules
