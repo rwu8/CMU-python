@@ -383,6 +383,71 @@ def histogram(a):
     return solution
 
 def nearestWords(wordList, word):
+    letters = 'abcdefghijklmnopqrstuvwxyz'
+    solution = []
+    splits = [(word[:i], word[i:]) for i in range(len(word) + 1)]
+    deletes = [a + b[1:] for a, b in splits if b]
+    transposes = [a + b[1] + b[0] + b[2:] for a, b in splits if len(b) > 1]
+    replaces = [a + c + b[1:] for a, b in splits for c in letters if b]
+    inserts = [a + c + b for a, b in splits for c in letters]
+
+    words = deletes + transposes + replaces + inserts
+
+    for item in wordList:
+        if item in words:
+            solution.append(item)
+    return solution
+
+def bowlingScore(pinsPerThrowList):
+    total = 0
+    frame = 0
+    idx = 0
+    while frame < 10:
+        # "strike"
+        # the number of pins in the next two throws are added to the score.
+        if pinsPerThrowList[idx] == 10:
+            total += pinsPerThrowList[idx] + sum(pinsPerThrowList[idx+1:idx+3])
+            idx += 1
+        # "spare"
+        # the number of pins knocked down in the next
+        # throw are added to the score.
+        elif sum(pinsPerThrowList[idx:idx+2]) == 10:
+            total += sum(pinsPerThrowList[idx:idx+3])
+            idx += 2
+        # if there is a spare or strike in the final frame,
+        # then the bowler gets one extra throw in that frame
+        # (but if there is a subsequent strike,
+        # they still get only that one extra throw)
+        elif frame == 10 and pinsPerThrowList[idx] == 10:
+            total += pinsPerThrowList[idx:idx+3]
+            return total
+        elif frame == 10 and sum(pinsPerThrowList[idx:idx+1]) == 10 \
+                and pinsPerThrowList[idx+2]:
+            total += sum(pinsPerThrowList[idx:idx+3])
+            return total
+        else:
+            total += sum(pinsPerThrowList[idx:idx+2])
+            idx += 2
+        frame += 1
+
+    return total
+
+def evalPolynomial(coeffs, x):
+    expon = len(coeffs) - 1
+    total = 0
+
+    for i in coeffs:
+        total += i * x ** expon
+        expon -= 1
+    return total
+
+def multiplyPolynomials(p1, p2):
+    return 42
+
+def polynomialToString(p):
+    return 42
+
+def areaOfPolygon(L):
     return 42
 
 #################################################
@@ -499,6 +564,19 @@ def testMostCommonName():
            == ['Aaron', 'Jane'])
     print("Passed!")
 
+def testbowlingScore():
+    print("Testing mostCommonName()...", end="")
+    assert(bowlingScore([10, 10, 10, 10, 10, 10,
+                         10, 10, 10, 10, 10, 10]) == 300)
+    assert(bowlingScore([1, 4, 4, 5, 6, 4, 5, 5,
+                         10, 0, 1, 7, 3, 6, 4, 10, 2, 8, 6]) == 133)
+    print("Passed!")
+
+def testevalPolynomial():
+    print("Testing evalPolynomial()...", end="")
+    assert(evalPolynomial([2,3,0,4], 4) == 180)
+    print("Passed!")
+
 #################################################
 # Hw4 Main
 #################################################
@@ -520,6 +598,7 @@ def testAll():
     testMap()
     testfirstNEvenFibonacciNumbers()
     testMostCommonName()
+    testbowlingScore()
 
 def main():
     cs112_s18_week4_linter.lint() # check style rules
