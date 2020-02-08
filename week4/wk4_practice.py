@@ -487,7 +487,12 @@ def polynomialToString(p):
     return solution
 
 def areaOfPolygon(L):
-    return 42
+    length = len(L)
+    area = 0
+    for i in range(length - 1):
+        area += (L[i][0]*L[i+1][1] - L[i][1]*L[i+1][0])
+    area += (L[length - 1][0]*L[0][1] - L[length - 1][1]*L[0][0])
+    return abs(area) / 2
 
 #################################################
 # Hw4 Test Scripts
@@ -626,6 +631,15 @@ def testpolynomialToString():
     assert(polynomialToString([2, -3, 0, 4]) == "2n^3 - 3n^2 + 4")
     print("Passed!")
 
+def testAreaOfPolygon():
+    print("Testing areaOfPolygon()...", end="")
+    assert(almostEqual(areaOfPolygon([(4,10), (9,7), (11,2), (2,2)]), 45.5))
+    assert(almostEqual(areaOfPolygon([(9,7), (11,2), (2,2), (4, 10)]), 45.5))
+    assert(almostEqual(areaOfPolygon([(0, 0), (0.5,1), (1,0)]), 0.5))
+    assert(almostEqual(areaOfPolygon([(0, 10), (0.5,11), (1,10)]), 0.5))
+    assert(almostEqual(areaOfPolygon([(-0.5, 10), (0,-11), (0.5,10)]), 10.5))
+    print("Passed!")
+
 #################################################
 # Hw4 Main
 #################################################
@@ -649,6 +663,7 @@ def testAll():
     testMostCommonName()
     testbowlingScore()
     testpolynomialToString()
+    testAreaOfPolygon()
 
 def main():
     cs112_s18_week4_linter.lint() # check style rules
