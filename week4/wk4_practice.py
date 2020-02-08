@@ -442,10 +442,49 @@ def evalPolynomial(coeffs, x):
     return total
 
 def multiplyPolynomials(p1, p2):
-    return 42
+    solution = []
+    for i in p1:
+        for j in p2:
+            temp = j * i
+            if temp > 0:
+                solution.append(temp)
+    return solution
 
 def polynomialToString(p):
-    return 42
+    varName = 'n'
+    exponentiation = '^'
+    solution = ''
+    sign = ''
+    exponNum = len(p) - 1
+
+    for item in p:
+        temp = 0
+        if item == p[0]:
+            temp = str(item)
+            solution += temp + varName + exponentiation + \
+                        str(exponNum) + ' '
+        elif item < 0:
+            sign = '- '
+            temp = -item
+            solution += sign + str(temp) + varName + \
+                        exponentiation + str(exponNum) + ' '
+        elif item == 0:
+            continue
+        elif exponNum == 1 and item > 0:
+            sign = '+ '
+            temp = str(item)
+            solution += sign + temp
+        elif exponNum == 1 and item < 0:
+            sign = '- '
+            temp = str(item)
+            solution += sign + temp
+        else:
+            sign = '+ '
+            temp = str(item)
+            solution += sign + temp + varName + \
+                        exponentiation + str(exponNum) + ' '
+        exponNum -= 1
+    return solution
 
 def areaOfPolygon(L):
     return 42
@@ -577,6 +616,16 @@ def testevalPolynomial():
     assert(evalPolynomial([2,3,0,4], 4) == 180)
     print("Passed!")
 
+def testmultiplyPolynomials():
+    print("Testing evalPolynomial()...", end="")
+    assert(multiplyPolynomials([2, 0, 3], [4, 5]) == [8, 10, 12, 15])
+    print("Passed!")
+
+def testpolynomialToString():
+    print("Testing polynomialToString()...", end="")
+    assert(polynomialToString([2, -3, 0, 4]) == "2n^3 - 3n^2 + 4")
+    print("Passed!")
+
 #################################################
 # Hw4 Main
 #################################################
@@ -599,6 +648,7 @@ def testAll():
     testfirstNEvenFibonacciNumbers()
     testMostCommonName()
     testbowlingScore()
+    testpolynomialToString()
 
 def main():
     cs112_s18_week4_linter.lint() # check style rules
