@@ -30,26 +30,82 @@ def roundHalfUp(d):
 """
 Fill in your answers to the List Function Table problem here.
 
-a = a + b
-a += b
-a.append(x)
-a.insert(0, x)
-a.extend(b)
-a.remove(x)
-a.pop(0)
-del a[0]
-a.reverse()
+a = a + b            Non-Destructively (Creating New Lists) 
+a += b               Destructively (Modifying Lists) 
+a.append(x)          Destructively (Modifying Lists)   
+a.insert(0, x)       Destructively (Modifying Lists) 
+a.extend(b)          Destructively (Modifying Lists) 
+a.remove(x)          Destructively (Modifying Lists) 
+a.pop(0)             Destructively (Modifying Lists) 
+del a[0]             Destructively (Modifying Lists) 
+a.reverse()          Destructively (Modifying Lists) 
 reversed(a)
-a.sort()
-sorted(a)
-copy.copy(a)
+a.sort()             Destructively (Modifying Lists) 
+sorted(a)            Non-Destructively
+copy.copy(a)         Non-Destructively
 """
 
+from collections import Counter
+
+def lookAndSay(a):
+    if a == []: return []
+    solution = []
+    prev = None
+    counter = 1
+
+    for i in range(len(a)):
+        if i == 0:
+            prev = a[i]
+            continue
+        elif a[i] == prev:
+            counter += 1
+        else:
+            solution.append((counter, prev))
+            counter += 1
+        prev = a[i]
+    solution.append((counter, prev))
+    return solution
+
 def inverseLookAndSay(a):
-    return 42
+    solution = []
+
+    for i in range(len(a)):
+        for j in range(a[i][0]):
+            solution.append(a[i][1])
+    return solution
+
+def isSubset(a,b):
+    for letter in string.ascii_lowercase:
+        if a.count(letter) > b.count(letter):
+            return False
+    return True
+
+def calculateScore(scores, word):
+    score = 0
+    for letter in word:
+        score += scores[ord(letter) - ord('a')]
+    return score
 
 def bestScrabbleScore(dictionary, letterScores, hand):
-    return 42 
+    result = ('', 0)
+    word_arr, bestScore = result
+    for word in dictionary:
+        if isSubset(word, hand):
+            score = calculateScore(letterScores, word)
+            if bestScore < score:
+                word_arr = word
+                bestScore = score
+            elif bestScore == score:
+                if isinstance(word_arr, str):
+                    word_arr = [word_arr, word]
+                else:
+                    word_arr = word_arr + [word]
+    result = (word_arr, bestScore)
+    if word_arr == [] or word_arr == '':
+        return None
+
+    return result
+
 
 ######################################################################
 # ignore_rest: The autograder will ignore all code below here
@@ -137,7 +193,7 @@ def testDrawChessboard():
 def testAll():
     testInverseLookAndSay()
     testBestScrabbleScore()
-    testDrawChessboard()
+    # testDrawChessboard()
 
 def main():
     cs112_s18_week4_linter.lint() # check style rules
