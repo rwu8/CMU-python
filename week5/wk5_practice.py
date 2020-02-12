@@ -100,13 +100,13 @@ def isKnightsTour(a):
 #################################################
 
 def testMakeMagicSquare():
-    print('testing makeMagicSquare')
+    print('testing makeMagicSquare()... ', end="")
     assert(makeMagicSquare(4) == None)
     assert(makeMagicSquare(3) == [[2,7,6], [9,5,1], [4,3,8]])
     print('Passed!')
 
 def testIsLatinSquare():
-    print('testing isLatinSquare()')
+    print('testing isLatinSquare()... ', end="")
     assert(isLatinSquare([[1, 2, 3], [2, 3, 1], [3, 1, 2]]) == True)
     assert(isLatinSquare([['A', 'B', 'C'], ['B', 'C', 'A'], ['C', 'A', 'B']]) == True)
     assert(isLatinSquare([[4, 2, 3], [2, 3, 1], [3, 1, 2]]) == False)
