@@ -191,22 +191,24 @@ def mergeWithOneAuxList(aux, a, start1, start2, end):
             aux[start1 + i] = a[index2]
             index2 += 1
         else:
-            aux[start1 + i] = a[index2]
-            index2 += 1
+            aux[start1 + i] = a[index1]
+            index1 += 1
 
 def mergeSortWithOneAuxList(a):
     n = len(a)
     aux = [None] * n
-    step = 1
+    step = 1 # tracks size of list
 
     while step < n:
         for start1 in range(0,n,2*step):
+            # track the start and end of the second list
             start2 = min(start1 + step, n)
             end = min(start1 + 2*step, n)
             mergeWithOneAuxList(aux, a, start1, start2, end)
-        for i in range(n):
-            a[i] = aux[i]
         step *= 2
+
+    for i in range(n):
+        a[i] = aux[i]
 
 
 #################################################
