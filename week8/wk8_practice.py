@@ -181,13 +181,33 @@ def getPairSum(a, target):
     else:
         return []
 
-def merge(a, start1, start2, end):
-    solution = []
-
-    return solution
+def mergeWithOneAuxList(aux, a, start1, start2, end):
+    index1 = start1
+    index2 = start2
+    length = end - start1
+    for i in range(length):
+        if ((index1 == index2) or
+                ((index2 != end) and (a[index1] > a[index2]))):
+            aux[start1 + i] = a[index2]
+            index2 += 1
+        else:
+            aux[start1 + i] = a[index2]
+            index2 += 1
 
 def mergeSortWithOneAuxList(a):
-    aux = []
+    n = len(a)
+    aux = [None] * n
+    step = 1
+
+    while step < n:
+        for start1 in range(0,n,2*step):
+            start2 = min(start1 + step, n)
+            end = min(start1 + 2*step, n)
+            mergeWithOneAuxList(aux, a, start1, start2, end)
+        for i in range(n):
+            a[i] = aux[i]
+        step *= 2
+
 
 #################################################
 # Test Functions
