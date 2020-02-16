@@ -210,6 +210,7 @@ def mergeSortWithOneAuxList(a):
     for i in range(n):
         a[i] = aux[i]
 
+    return a
 
 #################################################
 # Test Functions
@@ -228,7 +229,7 @@ def testMostCommonName():
     print("Passed!")
 
 def testGetPairSum():
-    print("Testing getPairSum...", end="")
+    print("Testing getPairSum()...", end="")
     assert(getPairSum([1],1) == [])
     assert(getPairSum([5, 2], 7) in [ [5, 2], [2, 5] ])
 
@@ -241,9 +242,16 @@ def testGetPairSum():
     assert(getPairSum([1, 4, 3], 2) == [])
     print("Passed!")
 
+def testmergeSortWithOneAuxList():
+    print("Testing mergeSortWithOneAuxList()...", end="")
+    assert(mergeSortWithOneAuxList([1, 4, 3]) == [1, 3, 4])
+    assert(mergeSortWithOneAuxList([4, 6, 2, 8, 1, 6, 9, 3]) == [1, 2, 3, 4, 6, 6, 8 ,9])
+    print("Passed!")
+
 def testAll():
     testGetPairSum()
     testMostCommonName()
+    testmergeSortWithOneAuxList()
 
 def main():
     testAll()
