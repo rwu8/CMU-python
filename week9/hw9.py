@@ -244,6 +244,40 @@ class Polynomial(object):
                 arr[o1 + o2] += i1 * i2
         return Polynomial(arr)
 
+class Quadratic(Polynomial):
+    def __init__(self, coeffs):
+        if len(coeffs) != 3:
+            Quadratic(False)
+        else:
+            super().__init__(coeffs)
+
+    def __repr__(self):
+        return "Quadratic(a=%d, b=%d, c=%d" % (self.coeffs[0], self.coeffs[1], self.coeffs[2]) + ")"
+
+    def discriminant(self):
+        return self.coeffs[1]**2 - 4*self.coeffs[0]*self.coeffs[2]
+
+    def numberOfRealRoots(self):
+        discrim = self.discriminant()
+        if discrim > 0:
+            return 2
+        elif discrim == 0:
+            return 1
+        else:
+            return 0
+
+    def getRealRoots(self):
+        roots = self.numberOfRealRoots()
+        if roots == 0:
+            return []
+        elif roots == 1:
+            root = (-self.coeffs[1] + math.sqrt(self.discriminant())) / (2 * self.coeffs[0])
+            return [root]
+        else:
+            root1 = (-self.coeffs[1] - math.sqrt(self.discriminant())) / (2 * self.coeffs[0])
+            root2 = (-self.coeffs[1] + math.sqrt(self.discriminant())) / (2 * self.coeffs[0])
+            return [root1, root2]
+
 #################################################
 # Test code is below here
 #################################################
@@ -571,7 +605,7 @@ def testQuadraticClass():
 
 def testEquationClasses():
     testPolynomialClass()
-    # testQuadraticClass()
+    testQuadraticClass()
 
 def testAll():
     testAlternatingSum()
