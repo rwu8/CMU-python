@@ -81,21 +81,30 @@ def f(n):
       return f(n-1) + 2*n - 1
 # This function returns n squared
 
+import os
 def countFiles(path):
-    return 42
+    count = 0
+    # base case: file
+    if not os.path.isdir(path):
+        return 1
+    # recursive case: folder
+    for filename in os.listdir(path):
+        count = count + countFiles(path + "/" + filename)
+    return count
 
-
-def permutations(a):
+def permutations(a, k, depth=0):
     # returns a list of all permutations of the list a
-    if (len(a) == 0):
+    # print('  ' * depth, 'allPermutations(', a, k, ')')
+    if (len(a) <= 1) or k <= 0:
         return [[]]
     else:
-        allPerms = []
-        for subPermutation in permutations(a[1:]):
-            for i in range(len(subPermutation) + 1):
-                allPerms += [subPermutation[:i] + [a[0]] + subPermutation[i:]]
+        allPerms = [ ]
+        for i, item in enumerate(a):
+            temp = a[:i] + a[i+1:]
+            for subPermutation in permutations(temp, k - 1, depth + 1):
+                allPerms += [[item] + subPermutation]
+                # print('  ' * depth, '--> ', allPerms)
         return allPerms
-
 
 #################################################
 # Test Functions
@@ -111,8 +120,23 @@ def testCountFiles():
     assert (countFiles("sampleFiles") == 10)
     print("Passed!")
 
+def testPermutations():
+    import itertools
+    a = [1, 2, 3, 4]
+    a_permutations = [list(x) for x in itertools.permutations(a, 2)]
+    b = [x for x in range(30)]
+    b_permutations = [list(x) for x in itertools.permutations(b, 2)]
+    c = [x for x in range(72)]
+    c_permutations = [list(x) for x in itertools.permutations(c, 2)]
+    print("Testing countFiles()...", end="")
+    assert(permutations(a, 2) == a_permutations)
+    assert(permutations(b, 2) == b_permutations)
+    assert (permutations(c, 2) == c_permutations)
+    print("Passed!")
+
 def testAll():
     testCountFiles()
+    testPermutations()
 
 def main():
     testAll()
