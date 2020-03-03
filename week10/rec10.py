@@ -13,31 +13,20 @@
 '''
 Write the recursive function listFiles(path) which takes a path and returns a
 list of all the paths of files in that file. Recall that a path is a string
-and leads to a folder (directory) or a file. Ex:
-"Documents/15-112f18/hw/week10" or "Documents/15-112f18/hw/week10/hw10.py"
-For example, given the following file system:
-
-/Halloween/Zombies/brainzzzz.py
-                  /imnotdeadlol.txt
-/Halloween/candy.py
-/Halloween/Vampire/bl00d.png
-                  /garlicfries.csv
-/Halloween/costumes.docx
-
-listFiles("/Halloween") would return
-[
- '/Halloween/Zombies/brainzzzz.py',
- '/Halloween/Zombies/imnotdeadlol.txt',
- '/Halloween/candy.py',
- '/Halloween/Vampire/bl00d.png',
- '/Halloween/Vampire/garlicfries.csv',
- '/Halloween/costumes.docx'
-]
+and leads to a folder (directory) or a file.
 '''
 
-def listFiles(path):
-    return [42]
+import os
 
+def listFiles(path):
+    if not os.path.isdir(path):
+        return [path]
+    else:
+        result = []
+        for filename in os.listdir(path):
+            result += listFiles(path + '/' + filename)
+
+        return result
 
 ###############################################################################
 # Maze Solver
@@ -54,12 +43,60 @@ import math
 ###############################################################################
 # Fill in these
 ###############################################################################
+# General backtracking template
+# def solveWithBacktracking(problemState):
+#     if isComplete(problemState):
+#         return problemState
+#     nextStep = getNextStep(problemState)
+#     for move in getPossibleMoves(problemState, nextStep):
+#         if isValid(problemState, nextStep, move):
+#             problemState = makeMove(problemState, nextStep, move)
+#             tmpSolution = solveWithBacktracking(problemState)
+#             if tmpSolution != None:
+#                 return tmpSolution
+#             problemState = undoMove(problemState, nextStep, move)
+#     return None
 
-def isValid(data, row,col,direction):
-    pass
+def isValid(data, row, col, direction):
+    maze = data.maze
+    rows = len(maze)
+    cols = len(maze[0])
+
+    # if our row or col goes out of bounds
+    if not (0 <= row < rows and 0 <= col < cols):
+        return False
+
+    if direction == EAST:
+        return maze[row][col].east
+    if direction == SOUTH:
+        return maze[row][col].south
+    if direction == WEST:
+        return maze[row][col - 1].east
+    if direction == NORTH:
+        return maze[row - 1][col].south
+
+    assert False
 
 def solve(data, row, col, visited):
-    pass
+    # base cases
+    if row == len(data.maze) - 1 and col == len(data.maze[0]) - 1:
+        return visited
+        # recursive case
+    for direction in [NORTH, SOUTH, EAST, WEST]:
+        drow, dcol = direction
+
+        # if our move is new, and a valid move (does not exceed
+        # the bounds of the maze)
+        if (row + drow, col + dcol) not in visited and \
+                isValid(data, row, col, direction):
+            visited.add((row + drow, col + dcol))
+            tmpSolution = solve(data, row + drow, col + dcol, visited)
+            # we found our solution!
+            if tmpSolution != None:
+                return tmpSolution
+            # otherwise, backtrack to our last valid move, and continue recursing
+            visited.remove((row + drow, col + dcol))
+        return None
 
 def solveMaze(data):
     visited = set()
@@ -357,3 +394,27 @@ def run(width=300, height=300):
     print("bye!")
 
 # run(600, 600)
+
+def testListFiles():
+    print('Testing listFiles()...', end=" ")
+    assert (listFiles('./fileSystem_practice') == ['./fileSystem_practice/listFiles.py',
+                                                   './fileSystem_practice/printFiles.py',
+                                                   './fileSystem_practice/sampleFiles/emergency.txt',
+                                                   './fileSystem_practice/sampleFiles/folderB/restArea.txt',
+                                                   './fileSystem_practice/sampleFiles/folderB/folderH/driving.txt',
+                                                   './fileSystem_practice/sampleFiles/mirror.txt',
+                                                   './fileSystem_practice/sampleFiles/folderA/fishing.txt',
+                                                   './fileSystem_practice/sampleFiles/folderA/folderC/folderE/tree.txt',
+                                                   './fileSystem_practice/sampleFiles/folderA/folderC/folderD/misspelled.txt',
+                                                   './fileSystem_practice/sampleFiles/folderA/folderC/folderD/penny.txt',
+                                                   './fileSystem_practice/sampleFiles/folderA/folderC/giftwrap.txt',
+                                                   './fileSystem_practice/sampleFiles/folderA/widths.txt']
+            )
+    print('Passed!')
+
+
+def main():
+    testListFiles()
+
+if __name__ == '__main__':
+    main()
